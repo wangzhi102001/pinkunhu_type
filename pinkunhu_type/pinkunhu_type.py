@@ -4,7 +4,7 @@ import time
 import urllib
 import urllib3
 import fangfa as ff
-
+import exceltojson as e_to_j
 
 
 #构造模拟浏览器
@@ -109,7 +109,7 @@ time.sleep(2)
 ###  循环体   
 
 
-
+#e_to_j.excel_json(r"C:\Users\wangz\Desktop\东岳村 贫困户信息_20180814.xlsx",r"C:\Users\wangz\Desktop\2.json")   #转换
 
 
 
