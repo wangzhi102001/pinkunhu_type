@@ -67,8 +67,6 @@ time.sleep(2)
 
 #！！如果查询不到  异常处理   记录日志    保存日志
 
-
-
 #driver.find_element_by_xpath("//*[@id="ui-tabpanel-1"]/div/busi-tab/object-poor-family/p-panel[3]/div/div[2]/div/div/object-poor-family-grid/p-datatable/div/div[1]/div/div[2]/div/table/tbody/tr/td[4]/span/span").click() #点击第一栏查询项姓名栏（如果查询结果唯一）
 #time.sleep(2)
 
@@ -77,13 +75,8 @@ time.sleep(2)
 driver.find_element_by_xpath("//span[contains(text(),'五、帮扶责任人结对信息')]").click() #点击帮扶责任人结对信息栏
 time.sleep(2)
 
-
-
 #driver.find_element_by_xpath("//*[@id="ui-tabpanel-1"]/div/busi-tab/object-poor-family/p-panel[3]/div/div[2]/div/div/object-poor-family-grid/p-datatable/div/div[1]/div/div[2]/div/table/tbody/tr[1]/td[4]/span/span/a").click()#点击第一栏查询项姓名栏（如果查询结果不唯一）
 #time.sleep(2)
-
-
-
 
 #formcontrolname="aar012" 联系电话
 #formcontrolname="aac004" 银行卡号
