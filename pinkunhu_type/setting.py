@@ -3,7 +3,7 @@ class setting():
     """w"""
     def __init__(self):
         self.url="http://cpadisc4.cpad.gov.cn/cpad/login"
-        self.acount =u'43072320801'
+        self.account =u'43072320801'
         self.password =u'000724'
         self.xpath1="//input[@formcontrolname='account']"#帐号输入框体
         self.xpath2="//input[@formcontrolname='password']"#密码输入框体
@@ -35,7 +35,8 @@ class setting():
         self.xpath28="//button[@id='on_cancel']/span"#页面关闭按钮
         self.xpath29="//object-poor-family-twinning-addgrid/p-datatable/div/div/div/div[2]/div/table/tbody/tr/td/p-dtradiobutton/div/div/input"#新增结对帮扶人选择框1号
         self.xpath30="//object-poor-family-twinning-addgrid/p-datatable/div/div/div/div[2]/div/table/tbody/tr[2]/td/p-dtradiobutton/div/div/input"#新增结对帮扶人选择框2号
-        self.xpath29="//object-poor-family-twinning-addgrid/p-datatable/div/div/div/div[2]/div/table/tbody/tr/td[3]/span"#新增结对帮扶人姓名（.text）
-        self.xpath29="//object-poor-family-twinning-addgrid/p-datatable/div/div/div/div[2]/div/table/tbody/tr/td[14]/span"#新增结对帮扶人联系电话（.text）
-        
+        self.xpath31="//object-poor-family-twinning-addgrid/p-datatable/div/div/div/div[2]/div/table/tbody/tr/td[3]/span"#新增结对帮扶人姓名（.text）
+        self.xpath32="//object-poor-family-twinning-addgrid/p-datatable/div/div/div/div[2]/div/table/tbody/tr/td[14]/span"#新增结对帮扶人联系电话（.text）
+        self.xpath33="//object-poor-family-twinning-grid/p-datatable/div/div[1]/div/div[2]/div/table/tbody/tr/td[3]/span"
+
         
