@@ -8,10 +8,12 @@ import exceltojson as e_to_j
 import personData
 
 
+
+
 #构造模拟浏览器
 
-P1 = personData.personData("欧金珍","432424194312161827","18673669254","6217995580013941192","蒋娟")
-
+p1 = personData.personData("欧金珍","432424194312161827","18673669254","6217995580013941192","蒋娟")
+#mysetting = setting
 
 chromedriver = "C:/Program Files (x86)/Google/Chrome/Application/chromedriver"
 
