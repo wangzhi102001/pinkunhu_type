@@ -5,9 +5,13 @@ import urllib
 import urllib3
 import fangfa as ff
 import exceltojson as e_to_j
+import personData
 
 
 #构造模拟浏览器
+
+P1 = personData.personData("欧金珍","432424194312161827","18673669254","6217995580013941192","蒋娟")
+
 
 chromedriver = "C:/Program Files (x86)/Google/Chrome/Application/chromedriver"
 
@@ -59,7 +63,7 @@ time.sleep(5)
 #time.sleep(2)
 #！！出现重名，所以弃用
 
-driver.find_element_by_xpath("//input[@formcontrolname='aab004']").send_keys(u'43072319830810522062') #输入查询人身份证号
+driver.find_element_by_xpath("//input[@formcontrolname='aab004']").send_keys(p1.ID) #输入查询人身份证号
 time.sleep(2)
 driver.find_element_by_xpath("//button[@label='查询']/span").click() #点击查询按钮
 
@@ -72,16 +76,25 @@ time.sleep(2)
 
 driver.find_element_by_xpath("//tbody[@class='ui-datatable-data ui-widget-content ui-datatable-hoverable-rows']/tr/td[4]").click() #点击第一栏查询项姓名栏（如果查询结果唯一）
 time.sleep(2)
+
+driver.find_element_by_xpath("//input[@formcontrolname='aar012']").send_keys(p1.phone)
+time.sleep(1)
+
+#formcontrolname="aar012" 联系电话
+driver.find_element_by_xpath("//input[@formcontrolname='aac004']").send_keys(p1.cardnumber)
+time.sleep(1)
+
+#formcontrolname="aac004" 银行卡号
+
 driver.find_element_by_xpath("//span[contains(text(),'五、帮扶责任人结对信息')]").click() #点击帮扶责任人结对信息栏
 time.sleep(2)
 
 #driver.find_element_by_xpath("//*[@id="ui-tabpanel-1"]/div/busi-tab/object-poor-family/p-panel[3]/div/div[2]/div/div/object-poor-family-grid/p-datatable/div/div[1]/div/div[2]/div/table/tbody/tr[1]/td[4]/span/span/a").click()#点击第一栏查询项姓名栏（如果查询结果不唯一）
 #time.sleep(2)
 
-#formcontrolname="aar012" 联系电话
-#formcontrolname="aac004" 银行卡号
-
 #xpath（//span[contains(text(),'五、帮扶责任人结对信息')]）
+
+
 
 #  //button[@label='取消结对']/span
 #  //button[@label='增加结对']/span
