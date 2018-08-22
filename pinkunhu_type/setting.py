@@ -40,5 +40,5 @@ class setting():
         self.xpath32="//object-poor-family-twinning-addgrid/p-datatable/div/div/div/div[2]/div/table/tbody/tr/td[14]/span"#新增结对帮扶人联系电话（.text）
         self.xpath33="//object-poor-family-twinning-grid/p-datatable/div/div[1]/div/div[2]/div/table/tbody/tr/td[3]/span"
         self.xpath34="//span[contains(text(),'添加帮扶责任人列表')]/../a"#添加结对帮扶责任人列表关闭X按钮
-
+        self.xpath35="//span[contains(text(),'贫困户信息')]/../a"#贫困户信息关闭X按钮
         

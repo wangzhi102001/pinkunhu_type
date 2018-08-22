@@ -49,7 +49,7 @@ def json_to_personDatalist(path,list_js,list,error,start,end,n):
 #input()
 
     for person in list_js:#将加载的json数据添加到personData列表中
-        list.append(personData.personData(person['name'],person['ID'],person['phone'],person['cardnumber'],person['helpPerson'],person['helpPerson_phone'],person['suoyin']))
+        list.append(personData.personData(person['name'],person['ID'],person['phone'],person['cardnumber'],person['helpPerson'],person['helpPerson_phone'],person['suoyin'],person['edit'],person['error']))
         if not(person['edit']):
             if person['error']:
                 error+=1
