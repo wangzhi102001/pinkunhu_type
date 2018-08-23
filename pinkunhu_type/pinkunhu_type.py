@@ -124,7 +124,7 @@ try:
             e_to_j.personDatalist_to_json(list_poor_family,'002.json')
             if error_count>=300:
                 break
-            if p1.edit == False:
+            if p1.edit == False or p1.error == False:
                 time.sleep(1)
                 try:
                     driver.find_element_by_xpath(my.xpath9).clear() #清空
@@ -172,7 +172,7 @@ try:
                     a=False
                 if a:    
                     p1.add_log_same()
-                    p1.show_error()
+                    p1.show_edit()
                     driver.find_element_by_xpath(my.xpath28).click()#关闭弹出页面
                     time.sleep(0.5)
                     continue
@@ -214,6 +214,8 @@ try:
                                 pass
                             time.sleep(0.5)
                             p1.add_log_finish()
+                            p1.show_edit()
+                            
                         except (ElementNotVisibleException,NoSuchElementException,TimeoutException)as e:
                             p1.add_log_e0(e)
                             p1.show_error()

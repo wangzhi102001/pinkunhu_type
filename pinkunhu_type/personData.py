@@ -18,8 +18,13 @@ class personData():
 
 
     def show_error(self):
-        self.edit = True
+        
         self.error = True
+        self.print_log()
+    
+    def show_edit(self):
+        self.edit = True
+        self.add_log_finish()
         self.print_log()
 
 
@@ -44,8 +49,9 @@ class personData():
         self.log = "提示，%s,%s,%s,%s在系统中出现相同的结对帮扶人%s,标记为已处理，待手动处理。"% (datetime.now(),self.suoyin,self.name,self.ID,self.helpPerson)
 
     def add_log_finish(self):
+
         self.log = "完成，%s,%s,%s,%s已将结对帮扶人 %s 录入系统。"% (datetime.now(),self.suoyin,self.name,self.ID,self.helpPerson)
-        self.print_log()
+        
 
     def print_log(self):
         print(self.log)
