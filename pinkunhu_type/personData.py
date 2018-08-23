@@ -1,7 +1,7 @@
 from datetime import datetime
 class personData():
     """储存待录入结对帮扶资料对象"""
-    def __init__(self,name,ID,phone,cardnumber,helpPerson,helpPerson_phone,suoyin,edit = False,error = False):
+    def __init__(self,name,ID,phone,cardnumber,helpPerson,helpPerson_phone,suoyin,edit = False,error = False,log=""):
         self.name = name
         self.ID = ID
         self.phone = phone
@@ -13,7 +13,7 @@ class personData():
         self.edit = edit
         self.suoyin = suoyin
         self.error = error
-        self.log=""
+        self.log=log
         
 
 

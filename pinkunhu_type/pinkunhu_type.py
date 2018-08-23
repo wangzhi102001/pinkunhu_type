@@ -106,7 +106,7 @@ time.sleep(1)
 driver.find_element_by_xpath(my.xpath7).click()
 time.sleep(1)
 driver.find_element_by_xpath(my.xpath8).click()   #点击贫困户维护页面
-#time.sleep(5)
+time.sleep(5)
 
 #显示查询画面
 #driver.find_element_by_xpath("//input[@formcontrolname='aab002']").send_keys(u'张梅') #输入查询人姓名
@@ -118,7 +118,7 @@ driver.find_element_by_xpath(my.xpath8).click()   #点击贫困户维护页面
 #e_to_j.save_as_json(list_poor_family,'002.json')
 
 try:
-    for p1 in list_poor_family:
+    for p1 in list(reversed(list_poor_family[:])):
         try:
             #if p1.suoyin.endswith("50"):
             e_to_j.personDatalist_to_json(list_poor_family,'002.json')
