@@ -2,6 +2,7 @@ from io import BytesIO
 import lxml.html
 from PIL import Image
 import pytesseract
+from selenium.common.exceptions import ElementNotVisibleException,NoSuchElementException,TimeoutException,StaleElementReferenceException
 
 def extract_image(html):
     ## 利用lxml获取表单中图像数据。图像数据的前缀定义了数据类型。
@@ -29,3 +30,17 @@ def ocr(img):
     ascii_word = ''.join(c for c in word if c in string.letters).lower() ##将识别的每个字母连接起来组成验证码
     print(ascii_word)
     return ascii_word
+
+def retryingFindClick(by,driver):
+    result = False
+    attempts = 0
+    while attempts < 2:
+        try:
+            driver.find_element_by_xpath(by).click()
+            result = True
+            break
+        except StaleElementReferenceException as e :
+            pass
+        attempts+=1
+        return result
+

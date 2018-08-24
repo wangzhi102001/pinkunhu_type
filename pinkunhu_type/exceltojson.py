@@ -59,8 +59,13 @@ def json_to_personDatalist(path,list_js,list,error,start,end,n):
         n+=1
         print("已添加%s"% n)
     print("总共添加%s项,%s项已完成，%s项待完成(其中%s项出错，待手工处理)"% (n,end,start,error))
-    print('''待录入数据准备完成，开始登陆系统，gogogo！！！按任意键继续，将自动开始启动Chrome浏览器
-    随后请在此窗口输入验证码''')
+    print('''
+待录入数据准备完成，准备登陆系统......
+浏览器启动后
+''')
+    print(">>>>>需要在此窗口手动输入验证码<<<<<") 
+    print('''gogogo！！！按任意键开始启动Chrome浏览器......
+''')
     input()
 
 def personDatalist_to_json(personDatalist,path):

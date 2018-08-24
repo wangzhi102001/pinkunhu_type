@@ -41,13 +41,13 @@ class personData():
         self.log = "错误，%s,%s,%s,%s 出错，（%s）"% (datetime.now(),self.suoyin,self.name,self.ID,e)
 
     def add_log_e1(self,e):
-        self.log = "错误，%s,%s,%s,%s在查询进入基础信息界面时出错，（%s）。"% (datetime.now(),self.suoyin,self.name,self.ID,e)
+        self.log = "错误，%s,%s,%s,%s 身份证号有误，无法进入基础信息修改界面，（%s）。"% (datetime.now(),self.suoyin,self.name,self.ID,e)
 
     def add_log_e2(self,e):
-        self.log = "错误，%s,%s,%s,%s在修改结对帮扶责任人时出错，（%s）。"% (datetime.now(),self.suoyin,self.name,self.ID,e)
+        self.log = "错误，%s,%s,%s,%s在新增结对帮扶责任人时出错，（%s）。"% (datetime.now(),self.suoyin,self.name,self.ID,e)
     
-    def add_log_e0(self,e):
-        self.log = "错误，%s,%s,%s,%s，尚未查询到该结对帮扶责任人 %s 时出错，（%s）。"% (datetime.now(),self.suoyin,self.name,self.ID,self.helpPerson,e)
+    def add_log_e0(self):
+        self.log = "错误，%s,%s,%s,%s，尚未查询到该结对帮扶责任人 %s 时出错。"% (datetime.now(),self.suoyin,self.name,self.ID,self.helpPerson)
 
     def add_log_same(self):
         self.log = "提示，%s,%s,%s,%s在系统中出现相同的结对帮扶人%s,标记为已处理，待手动处理。"% (datetime.now(),self.suoyin,self.name,self.ID,self.helpPerson)
