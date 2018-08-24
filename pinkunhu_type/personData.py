@@ -27,6 +27,10 @@ class personData():
         self.add_log_finish()
         self.print_log()
 
+    def show_editdate(self):
+        self.edit = True
+        self.add_log_editdate()
+        self.print_log()
 
     def end(self):
         self.edit = True
@@ -51,11 +55,19 @@ class personData():
     def add_log_finish(self):
 
         self.log = "完成，%s,%s,%s,%s已将结对帮扶人 %s 录入系统。"% (datetime.now(),self.suoyin,self.name,self.ID,self.helpPerson)
-        
+    
+    def add_log_editdate(self):
+
+        self.log = "完成，%s,%s,%s,%s已将结对帮扶人 %s 时间修改完成。"% (datetime.now(),self.suoyin,self.name,self.ID,self.helpPerson)
+    def add_pass_state(self):
+        self.log = "提示：%s,%s,%s,%s状态为已修改，跳过..."% (datetime.now(),self.suoyin,self.name,self.ID)
 
     def print_log(self):
         print(self.log)
 
     def pass_state(self):
-        print("提示：%s,%s,%s,%s状态为已修改，跳过..."% (datetime.now(),self.suoyin,self.name,self.ID))
+        self.edit = True
+        self.add_pass_state()
+        self.print_log()
+
 

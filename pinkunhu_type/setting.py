@@ -31,7 +31,7 @@ class setting():
         self.xpath23="//button[@id='saveTwinning']/span"#新增结对帮扶人=>保存按钮
         self.xpath24="//object-poor-family-twinning-addgrid/form[2]/div/div/div[2]/nui-date-nav/div/p-calendar/span/input"#新增结对帮扶人=>开始日期框体
         self.xpath25="//object-poor-family-twinning-addgrid/form[2]/div/div/div[4]/nui-date-nav/div/p-calendar/span/input"#新增结对帮扶人=>结束日期框体
-        self.xpath26="//button[@class='swal2-confirm swal2-styled']"#整体确定按钮
+        self.xpath26="//button[@class='swal2-confirm swal2-styled']"#上层确定按钮
         self.xpath27="//button[@id='on_save']/span"#页面保存按钮
         self.xpath28="//button[@id='on_cancel']/span"#页面关闭按钮
         self.xpath29="//object-poor-family-twinning-addgrid/p-datatable/div/div/div/div[2]/div/table/tbody/tr/td/p-dtradiobutton/div/div/input"#新增结对帮扶人选择框1号
@@ -41,4 +41,5 @@ class setting():
         self.xpath33="//object-poor-family-twinning-grid/p-datatable/div/div[1]/div/div[2]/div/table/tbody/tr/td[3]/span"
         self.xpath34="//span[contains(text(),'添加帮扶责任人列表')]/../a"#添加结对帮扶责任人列表关闭X按钮
         self.xpath35="//span[contains(text(),'贫困户信息')]/../a"#贫困户信息关闭X按钮
+        self.xpath36 ="//span[contains(text(),'修改帮扶时间')]/../a" #添加修改帮扶日期页面关闭X按钮
         
