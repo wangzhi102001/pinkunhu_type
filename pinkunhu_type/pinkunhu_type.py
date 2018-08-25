@@ -15,7 +15,7 @@ from selenium.common.exceptions import ElementNotVisibleException,NoSuchElementE
 from selenium.webdriver.support.ui import WebDriverWait
 import selenium.webdriver.support.expected_conditions as EC
 from selenium.webdriver.common.by import By
-from colorama import Fore, Back, Style
+
 from datetime import datetime
 import pytesser3 as pyt3
 from PIL import Image
@@ -39,12 +39,13 @@ error = 0
 switch_1 = True
 error_count = 0
 time_clock = 5
+b = True
 js_below = "document.querySelector('body > div.swal2-container.swal2-fade.swal2-shown > div > div.swal2-buttonswrapper > button.swal2-confirm.swal2-styled').click()"
 
 while True:
     print('''
 #####################################################################################
-########################贫困户结对帮扶责任人自动维护脚本 V1.0########################
+########################贫困户结对帮扶责任人自动维护脚本 V1.2########################
 #################################### 作者：小王 #####################################
 ################################## QQ:282028623 #####################################
 #################################### 2018-8-24 ######################################
@@ -53,14 +54,15 @@ while True:
 --------------------------------------------------------------------------------
 准备工作：
     1.将所有结对帮扶人录入到指定结对帮扶单位，并将各结对帮扶单位与被帮扶村完成关联；
-    2.尽量去除重复的结对帮扶人，保证按姓名查询结对帮扶人结果唯一，这样确保默认点选
-的第一个就是正确的结对帮扶人；
+    2.尽量去除重复的结对帮扶人，保证按姓名查询结对帮扶人结果唯一，这样确保默认点选的第一个就是正确的结对帮扶人；
     3.同名的结对帮扶人，请在添加结对帮扶人加入空格，以区分，避免录入交叉。
     4.请将与Chrome浏览器版本对应的chromedriver，并放在Chrome程序目录Application文件夹中；
     5.首次运行，请按照脚本目录下excel模板编写数据源，命名为"001.xlsx"后放在脚本目录；
     6.路径下的"001.xlsx","001.json","002.json"为数据转换文件，请勿删除；
     7.第一次运行：请按照excel模板在目录下放入excel文件，并命名为"001.xlsx";
     8.非首次运行，请确保上次保存的"002.json"存在;
+
+    操作过程中请勿点击页面和最小化，可以在后台运行
 
                        首次运行或者新的数据源请输入  1
                         利用现存的数据源运行请输入   2
@@ -102,7 +104,7 @@ chromedriver = my.chromePath
 os.environ["webdriver.chrome.driver"] = chromedriver
 
 driver = webdriver.Chrome(chromedriver) #模拟打开浏览器
-driver.implicitly_wait(time_clock)  
+#driver.implicitly_wait(time_clock)  
 
 #WebDriverWait(driver, 10).until(EC.invisibility_of_element_located(By.XPATH,
 #my.xpath11))
@@ -126,18 +128,42 @@ driver.maximize_window() #窗口最大化
 ##输入账号
 time.sleep(2)
 
+
+
 driver.find_element_by_xpath(my.xpath1).send_keys(my.account) #输入账号
 #time.sleep(1)
 driver.find_element_by_xpath(my.xpath2).send_keys(my.password) #输入密码
-yanzhengma = input("请手动输入验证码：")
-#ff.extract_image(url)
+#yanzhengma = input("请手动输入验证码：")
+##ff.extract_image(url)
 #yanzhengma = pyt3.image_file_to_string('code.png')[:4]
-driver.find_element_by_xpath(my.xpath3).send_keys(yanzhengma) #输入验证码
-time.sleep(1)
 
-input()
-driver.find_element_by_xpath(my.xpath4).click()
-#登陆成功
+#验证码处理
+
+while b:
+    driver.find_element_by_xpath("//img[@id='inputImage']/..").click()#点击刷新验证码
+    time.sleep(1)
+    driver.save_screenshot('screenshot.png')
+    imgelement = driver.find_element_by_id('inputImage')
+    location = imgelement.location # 获取验证码x,y轴坐标
+    size = imgelement.size # 获取验证码的长宽
+    rangle = (int(location['x']),int(location['y']),int(location['x']+size['width']),int(location['y']+size['height'])) # 写成我们需要截取的位置坐标
+    i = Image.open("screenshot.png") # 打开截图
+    result = i.crop(rangle) # 使用Image的crop函数，从截图中再次截取我们需要的区域
+    result.save('result.png')
+    yanzhengma = pyt3.image_file_to_string('result.png', 'eng').strip()
+    print(">%s<"% yanzhengma)
+    
+    driver.find_element_by_xpath(my.xpath3).send_keys(yanzhengma) #输入验证码
+    driver.find_element_by_xpath(my.xpath4).click()#点击登陆
+    time.sleep(2)
+
+    #登陆成功
+    try:
+        driver.find_element_by_xpath("//div[contains(text(),'验证码不正确,请重新输入验证码')]")
+        driver.find_element_by_xpath("//button[@class = 'swal2-confirm swal2-styled']").click()        
+    except :
+        b = False
+    
 
 #加载时间过长 异常处理
 time.sleep(2)
@@ -202,26 +228,29 @@ try:
                 #基础信息修改完毕
                 
                 #开始修改结对帮扶人信息
-                driver.find_element_by_xpath(my.xpath14).click() #点击帮扶责任人结对信息栏
+                try:
+                    driver.find_element_by_xpath(my.xpath14).click() #点击帮扶责任人结对信息栏
+                except ElementNotVisibleException as e:
+                    
+                    print(e)
+                    
                 time.sleep(2)
                 
-                try:#判定是否发现该结对帮扶人
-                    time_clock = 3
+                try:#判定是否发现该结对帮扶人 
+                    time.sleep(3)
                     driver.find_element_by_xpath("//span[contains(text(),'%s')]" % p1.helpPerson)
-                    a = True
-                    time_clock = 5
-                except :
-                    a = False
-                    time_clock = 5
+                    a = True                    
+                except :                    
+                    a = False                   
 
                 if a:                    
                     #通过姓名定位后获取编号和电话号码
                     if driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[6]/span/span" % p1.helpPerson).text != p1.startdate and driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[7]/span/span" % p1.helpPerson).text != p1.enddate:#如果联系电话一致，且开始日期不为"2018年06年01日"，则需要先判定序号，为1时直接执行修改日期程序，不为1时，先js注入，点击radio，再执行修改程序。保存后。保存edit
                                                                                                                                                                                                         #log
-                                                                                                                                                                                                        ##driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[14]/span"%
-                                                                                                                                                                                                        #p1.helpPerson).text == p1.helpPerson_phone and
-                                                                                                                                                                                                        #driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[6]/span/span"%
-                                                                                                                                                                                                        #p1.helpPerson).text != p1.startdate
+                                                                                                                                                                                                                                        ##driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[14]/span"%
+                                                                                                                                                                                                                                        #p1.helpPerson).text == p1.helpPerson_phone and
+                                                                                                                                                                                                                                        #driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[6]/span/span"%
+                                                                                                                                                                                                                                        #p1.helpPerson).text != p1.startdate
 
                         #判定序号
                         if driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[14]/span" % p1.helpPerson).text != "1" :
@@ -234,10 +263,13 @@ try:
                             #driver.execute_script(js)
 
                             #也可以直接点击input下的span
-                            driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[1]/*/*/div[2]/span" % p1.helpPerson).click()
+                            try:
+                                driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[1]/*/*/div[2]/span" % p1.helpPerson).click()
+                            except ElementNotVisibleException as e:
+                                pass
 
                         driver.find_element_by_xpath(my.xpath17).click()#点击修改日期按钮
-                        time.sleep(1)
+                        time.sleep(1.5)
                         driver.find_element_by_xpath(my.xpath18).clear()#清除开始日期
                         driver.find_element_by_xpath(my.xpath18).send_keys(p1.startdate)#输入开始日期
                         driver.find_element_by_xpath(my.xpath19).clear()#清除结束日期
@@ -281,7 +313,7 @@ try:
                 else:#否则点击新增结对帮扶人
                     try:
                         driver.find_element_by_xpath(my.xpath16).click()#新增结对
-                        time.sleep(0.5)
+                        time.sleep(1.5)
                         driver.find_element_by_xpath(my.xpath21).send_keys(p1.helpPerson)#输入结对帮扶人姓名
                         driver.find_element_by_xpath(my.xpath22).click()#点击查询
                         WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//div[div[@class = 'loader'] and starts-with(@style,'display: none')]")))
@@ -364,11 +396,13 @@ try:
             else:
                 p1.pass_state()
                 
-        except (ElementNotVisibleException,NoSuchElementException,TimeoutException)as e:
+        except (NoSuchElementException,TimeoutException)as e:
+            print("test")
+            print(e)     
             
-            print(e)            
             error_count+=1
             time_clock = 3
+            
             try:
                 driver.execute_script(js_below) # js点击上层按钮
             except :
@@ -392,7 +426,7 @@ try:
             p1.show_error()
             time_clock = 5
             continue
-except (ElementNotVisibleException,NoSuchElementException,TimeoutException)as e:
+except (NoSuchElementException,TimeoutException)as e:
     print(e)
     print("总循环运行异常，程序结束")
     error_count+=1
@@ -488,3 +522,9 @@ finally:
 #e_to_j.excel_json(r"C:\Users\wangz\Desktop\东岳村
 #贫困户信息_20180814.xlsx",r"C:\Users\wangz\Desktop\2.json") #转换
     e_to_j.personDatalist_to_json(list_poor_family,'002.json')
+
+    with open("log.txt",'w',encoding="utf-8") as f:
+        for p1 in list_poor_family:
+            f.writelines(p1.log+'\n')
+
+    
