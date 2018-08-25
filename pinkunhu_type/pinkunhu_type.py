@@ -16,6 +16,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 import selenium.webdriver.support.expected_conditions as EC
 from selenium.webdriver.common.by import By
 from colorama import Fore, Back, Style
+from datetime import datetime
+import pytesser3 as pyt3
+from PIL import Image
+from io import BytesIO
+
+
+#e_to_j.js_to_xlsx('002.json','error_%s.xlsx' % str(datetime.now().strftime("%Y-%m-%d")))
+
 
 
 
@@ -31,7 +39,7 @@ error = 0
 switch_1 = True
 error_count = 0
 time_clock = 5
-js_below = "$('body > div.swal2-container.swal2-fade.swal2-shown > div > div.swal2-buttonswrapper > button.swal2-confirm.swal2-styled').click()"
+js_below = "document.querySelector('body > div.swal2-container.swal2-fade.swal2-shown > div > div.swal2-buttonswrapper > button.swal2-confirm.swal2-styled').click()"
 
 while True:
     print('''
@@ -56,23 +64,26 @@ while True:
 
                        首次运行或者新的数据源请输入  1
                         利用现存的数据源运行请输入   2
+                       导出现存数据中错误数据到excel 3
  
     ''')
    
-    input_num = input("请输入：(1/2)  >>>>>>>>>")
+    input_num = input("请输入：(1/2/3)  >>>>>>>>>")
     if input_num == "1":
         e_to_j.excel_json('001.xlsx' or '001.xls','001.json')
         e_to_j.file_to_json_fomat("001.json","002.json",personDatas,list_poor_family)
-        e_to_j.json_to_personDatalist("002.json",list_poor_family_js,list_poor_family,error,start,end,n)
+        #e_to_j.json_to_personDatalist("002.json",list_poor_family_js,list_poor_family,error,start,end,n)
         input("数据转换完成，生成文件完成，程序即将关闭，下次使用请输入2，按任意键退出......")
         sys.exit()
     
     elif input_num == "2":
         e_to_j.json_to_personDatalist("002.json",list_poor_family_js,list_poor_family,error,start,end,n)
         break
-    #elif str(input_num).lower=='q':
-    #    sys.exit()
-    
+    elif input_num == "3":
+        e_to_j.js_to_xlsx('002.json','error.xlsx')
+        #将002.json中error=true的项提取出来并写入error+datetime.excel
+        input("按任意键退出......")
+        sys.exit()
     else:
         print("请重新输入")
 #input()
@@ -119,8 +130,12 @@ driver.find_element_by_xpath(my.xpath1).send_keys(my.account) #输入账号
 #time.sleep(1)
 driver.find_element_by_xpath(my.xpath2).send_keys(my.password) #输入密码
 yanzhengma = input("请手动输入验证码：")
+#ff.extract_image(url)
+#yanzhengma = pyt3.image_file_to_string('code.png')[:4]
 driver.find_element_by_xpath(my.xpath3).send_keys(yanzhengma) #输入验证码
-#time.sleep(1)
+time.sleep(1)
+
+input()
 driver.find_element_by_xpath(my.xpath4).click()
 #登陆成功
 
@@ -202,11 +217,11 @@ try:
                 if a:                    
                     #通过姓名定位后获取编号和电话号码
                     if driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[6]/span/span" % p1.helpPerson).text != p1.startdate and driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[7]/span/span" % p1.helpPerson).text != p1.enddate:#如果联系电话一致，且开始日期不为"2018年06年01日"，则需要先判定序号，为1时直接执行修改日期程序，不为1时，先js注入，点击radio，再执行修改程序。保存后。保存edit
-                                                                                                                                                                                                                                                                           #log
-                                                                                                                                                                                                                                                                           ##driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[14]/span"%
-                                                                                                                                                                                                                                                                           #p1.helpPerson).text == p1.helpPerson_phone and
-                                                                                                                                                                                                                                                                           #driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[6]/span/span"%
-                                                                                                                                                                                                                                                                           #p1.helpPerson).text != p1.startdate
+                                                                                                                                                                                                        #log
+                                                                                                                                                                                                        ##driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[14]/span"%
+                                                                                                                                                                                                        #p1.helpPerson).text == p1.helpPerson_phone and
+                                                                                                                                                                                                        #driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[6]/span/span"%
+                                                                                                                                                                                                        #p1.helpPerson).text != p1.startdate
 
                         #判定序号
                         if driver.find_element_by_xpath("//span[contains(text(),'%s')]/../../td[14]/span" % p1.helpPerson).text != "1" :
@@ -327,7 +342,7 @@ try:
                 
                     except(ElementNotVisibleException,NoSuchElementException,TimeoutException)as e:
                         print("004")
-                        p1.add_log_e2(e)
+                        p1.add_log_e2()
                         p1.show_error()                        
                         continue
                 
@@ -370,7 +385,9 @@ try:
             try:
                 driver.find_element_by_xpath(my.xpath35).click()#贫困户信息关闭X按钮
             except :
-                print("成功debug，")
+                pass
+
+            print("成功debug")
             p1.add_log_e2()
             p1.show_error()
             time_clock = 5

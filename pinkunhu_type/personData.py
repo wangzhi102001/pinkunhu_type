@@ -43,8 +43,8 @@ class personData():
     def add_log_e1(self,e):
         self.log = "错误，%s,%s,%s,%s 身份证号有误，无法进入基础信息修改界面，（%s）。"% (datetime.now(),self.suoyin,self.name,self.ID,e)
 
-    def add_log_e2(self,e):
-        self.log = "错误，%s,%s,%s,%s在新增结对帮扶责任人时出错，（%s）。"% (datetime.now(),self.suoyin,self.name,self.ID,e)
+    def add_log_e2(self):
+        self.log = "错误，%s,%s,%s,%s在新增结对帮扶责任人时出错。"% (datetime.now(),self.suoyin,self.name,self.ID)
     
     def add_log_e0(self):
         self.log = "错误，%s,%s,%s,%s，尚未查询到该结对帮扶责任人 %s 时出错。"% (datetime.now(),self.suoyin,self.name,self.ID,self.helpPerson)

@@ -28,6 +28,9 @@
     <Compile Include="fangfa.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ocr.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="personData.py">
       <SubType>Code</SubType>
     </Compile>
