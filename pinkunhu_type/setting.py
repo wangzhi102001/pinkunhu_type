@@ -1,7 +1,9 @@
 # -*- coding:utf-8 -*-
+import json
+import codecs
 class setting():
     """w"""
-    def __init__(self,account=u'43072320801',password=u'000724'):
+    def __init__(self,account,password):
         self.url = "http://cpadisc4.cpad.gov.cn/cpad/login"
         self.account = account
         self.password = password
@@ -42,4 +44,20 @@ class setting():
         self.xpath34 = "//span[contains(text(),'添加帮扶责任人列表')]/../a"#添加结对帮扶责任人列表关闭X按钮
         self.xpath35 = "//span[contains(text(),'贫困户信息')]/../a"#贫困户信息关闭X按钮
         self.xpath36 = "//span[contains(text(),'修改帮扶时间')]/../a" #添加修改帮扶日期页面关闭X按钮
-        
+    
+    def load_setting(self):
+        with open('setting.json','r',encoding = 'utf-8') as f:
+            list_f = json.load(f)
+            self.account = list_f['account']
+            self.password = list_f['password']
+        print("已从'setting.json'加载帐号密码")
+
+    def get_and_save_setting(self):
+        account = input("请输入帐号")
+        password = input("请输入密码")
+        dict_j = {'account':account,'password':password}
+        j_file = str(json.dumps(dict_j, ensure_ascii=False))
+        with codecs.open('setting.json','w', encoding='utf-8', errors ='ignore') as f:
+            f.write(j_file)
+        print("已将账号和密码，保存至目录下的setting.json，可用记事本打开自行编辑，下次运行将自动读取已存配置")
+            
